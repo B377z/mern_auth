@@ -18,7 +18,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+            const response = await axios.post('/api/auth/login', formData);
             console.log('Login successful:', response.data);
             // Store token in localStorage or context
             localStorage.setItem('token', response.data.token);

@@ -9,14 +9,19 @@ export default function Protected() {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/protected", {
+        const res = await axios.get("/api/protected", {
           headers: { Authorization: `Bearer ${token}` }
         });
 
         setMessage(res.data.message);  // e.g. "Welcome!"
         setUser(res.data.user);        // return user info from backend
       } catch (err) {
-        setMessage("Unauthorized. Please log in.");
+        if (err.response?.data?.message === "Token expired, please login again") {
+        localStorage.removeItem("token");
+        setMessage("Session expired. Please login again.");
+      } else {
+        setMessage(err.response?.data?.message || "Error fetching protected data");
+      }
       }
     };
 

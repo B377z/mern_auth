@@ -9,7 +9,7 @@ export default function Register() {
         password: ''
     });
 
-    const [ setMessage] = useState("");
+    const [ message, setMessage] = useState("");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -20,7 +20,7 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+            const response = await axios.post('/api/auth/register', formData);
             console.log('Registration successful:', response.data);
             // Redirect or show success message
             setMessage("✅ Registration successful! Redirecting to login...");
@@ -35,6 +35,7 @@ export default function Register() {
     };
 
     return (
+        <div>
         <form onSubmit={handleSubmit}>
             <input
                 type="text"
@@ -62,5 +63,9 @@ export default function Register() {
             />
             <button type="submit">Register</button>
         </form>
+
+        {/* ✅ Show messages to user */}
+      {message && <p>{message}</p>}
+    </div>
     );
 }
