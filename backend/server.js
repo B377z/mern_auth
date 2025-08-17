@@ -31,7 +31,10 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 
 app.use('/api/protected', authMiddleware, (req, res) => {
-    res.json({ message: 'This is a protected route', user: req.user });
+  res.json({
+    message: `Welcome back, ${req.user.email}! 👋`,
+    user: req.user
+  });
 });
 
 // Start the server
